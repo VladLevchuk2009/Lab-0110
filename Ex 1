@@ -1,0 +1,81 @@
+class Chars
+{
+    private List<char> chars;
+
+    public Chars()
+    {
+        chars = new List<char>();
+    }
+    public static Chars operator +(Chars set, char character)
+    {
+        set.chars.Add(character);
+        return set;
+    }
+    public static Chars operator +(Chars set1, Chars set2)
+    {
+        Chars resultSet = new Chars();
+
+        resultSet.chars.AddRange(set1.chars);
+
+        foreach (char character in set2.chars)
+            resultSet.chars.Add(character);
+
+        return resultSet;
+    }
+    public static bool operator ==(Chars chars1, Chars chars2)
+    {
+        if (ReferenceEquals(chars1, null))
+            return ReferenceEquals(chars2, null);
+
+        if (ReferenceEquals(chars2, null))
+            return false;
+
+        if (chars1.chars.Count != chars2.chars.Count)
+            return false;
+
+        foreach (char c in chars1.chars)
+            if (!chars2.chars.Contains(c))
+                return false;
+
+        return true;
+    }
+    public static bool operator !=(Chars chars1, Chars chars2)
+    {
+        return !(chars1 == chars2);
+    }
+    public void Print()
+    {
+        foreach (char c in chars)
+            Console.Write(c + " ");
+        Console.WriteLine();
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Chars chars1 = new Chars();
+        Chars chars2 = new Chars();
+
+        chars1 = chars1 + 'a';
+        chars1 = chars1 + 'b';
+        chars1 = chars1 + 'c';
+
+        chars2 += 'b';
+        chars2 += 'c';
+        chars2 += 'd';
+
+        Chars chars = chars1 + chars2;
+       
+        Console.Write("chars1:");
+        chars1.Print();
+        Console.Write("chars2:");
+        chars2.Print();
+        Console.Write("(chars1 + chars2):");
+        chars.Print();
+
+        Console.WriteLine("chars1 == chars1? " + ReferenceEquals(chars1, chars1));
+        Console.WriteLine("chars1 == chars2? " + ReferenceEquals(chars1, chars2));
+    }
+}
